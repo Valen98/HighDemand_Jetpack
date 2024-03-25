@@ -61,6 +61,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     MainApp()
+
                 }
             }
         }
@@ -119,7 +120,7 @@ fun MainApp() {
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = "Medium Demand",
+                                text = "High Demand",
                                 fontSize = 32.sp,
                                 modifier = Modifier
                                     .padding(start = 8.dp, top = 16.dp, end = 8.dp)
@@ -159,7 +160,7 @@ fun RowScroll() {
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        items(20) { content ->
+        items(10) { content ->
             ContentRow(content)
         }
     }
@@ -170,7 +171,7 @@ fun ContentRow(id: Int) {
     val image: Painter = if (id % 2 == 0) {
         painterResource(R.drawable.photo1)
     } else {
-        painterResource(id = R.drawable.photo2)
+        painterResource(R.drawable.photo2)
     }
 
     Column(
@@ -201,7 +202,7 @@ fun ContentRow(id: Int) {
 @Composable
 fun ColumnScroll() {
     LazyColumn(modifier = Modifier.height(400.dp)) {
-        items(20) { item ->
+        items(10) { item ->
             ContentColumn(id = item)
         }
     }
@@ -216,7 +217,7 @@ fun ContentColumn(id: Int) {
         image = painterResource(R.drawable.photo1)
         string = "This is my bedroom"
     } else {
-        image = painterResource(id = R.drawable.photo2)
+        image = painterResource(R.drawable.photo2)
         string = "This is my Garden"
     }
 
@@ -237,7 +238,6 @@ fun ContentColumn(id: Int) {
                 fontSize = 8.sp
             )
         }
-
     }
 }
 
@@ -251,7 +251,7 @@ fun GridView() {
             .fillMaxWidth()
             .padding(top = 16.dp),
         content = {
-            items(20) {item ->
+            items(10) {item ->
                 GridImage(item)
             }
         }
@@ -264,7 +264,7 @@ fun GridImage(id: Int) {
     val image: Painter = if (id % 2 == 0) {
         painterResource(R.drawable.photo1)
     } else {
-        painterResource(id = R.drawable.photo2)
+        painterResource(R.drawable.photo2)
     }
 
     Image(
@@ -305,9 +305,5 @@ fun RowScrollPreview() {
 @Preview(showBackground = true)
 @Composable
 fun FullAppReview() {
-    Column {
-        RowScroll()
-        ColumnScroll()
-        GridView()
-    }
+    MainApp()
 }
