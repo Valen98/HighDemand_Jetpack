@@ -251,7 +251,7 @@ fun GridView() {
             .fillMaxWidth()
             .padding(top = 16.dp),
         content = {
-            items(10) {item ->
+            items(9) {item ->
                 GridImage(item)
             }
         }
