@@ -5,6 +5,15 @@
       <entry key="app">
         <State />
       </entry>
+      <entry key="scrollPostList()">
+        <State />
+      </entry>
+      <entry key="scrollPostTest()">
+        <State />
+      </entry>
+      <entry key="scrollRowTest()">
+        <State />
+      </entry>
       <entry key="startup()">
         <State />
       </entry>

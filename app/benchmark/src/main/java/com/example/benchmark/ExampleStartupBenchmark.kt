@@ -4,11 +4,15 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.ExperimentalMetricApi
+import androidx.benchmark.macro.FrameTimingMetric
+import androidx.benchmark.macro.MacrobenchmarkScope
 import androidx.benchmark.macro.PowerMetric
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.Direction
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -41,5 +45,93 @@ class ExampleStartupBenchmark {
     ) {
         pressHome()
         startActivityAndWait()
+    }
+
+    @Test
+    fun scrollPostTest() = benchmarkRule.measureRepeated(
+        packageName = "com.example.highdemand_jetpack",
+        metrics = listOf(FrameTimingMetric()),
+        iterations = 10,
+        startupMode = StartupMode.COLD
+    ) {
+        pressHome()
+        startActivityAndWait()
+
+        //Scroll on the post lazy column
+        scrollPostList()
+    }
+
+
+    private fun MacrobenchmarkScope.scrollPostList() {
+        val contentList = device.findObject(By.res("post_list"))
+
+        device.waitForIdle()
+
+        contentList.setGestureMargin(device.displayWidth / 3)
+
+        contentList.scroll(Direction.DOWN, 300f)
+
+        // Wait for the scroll to finish
+        device.waitForIdle()
+    }
+
+    @Test
+    fun scrollRowTest() = benchmarkRule.measureRepeated(
+        packageName = "com.example.highdemand_jetpack",
+        metrics = listOf(FrameTimingMetric()),
+        iterations = 10,
+        startupMode = StartupMode.COLD
+    ) {
+        pressHome()
+        startActivityAndWait()
+
+        //Scroll on the row list
+        scrollRowList()
+    }
+    private fun MacrobenchmarkScope.scrollRowList() {
+        val contentList = device.findObject(By.res("row_list"))
+
+        device.waitForIdle()
+
+        contentList.setGestureMargin(device.displayWidth / 4)
+
+        contentList.scroll(Direction.RIGHT, 300f)
+
+        device.waitForIdle()
+    }
+
+    @Test
+    fun openNav() = benchmarkRule.measureRepeated(
+        packageName = "com.example.highdemand_jetpack",
+        metrics = listOf(FrameTimingMetric()),
+        iterations = 2,
+        startupMode = StartupMode.COLD
+    )
+    {
+        pressHome()
+        startActivityAndWait()
+
+        //Test to open navigation menu
+        openNavigation()
+        closeNavigation()
+    }
+    private fun MacrobenchmarkScope.openNavigation() {
+        val openNav = device.findObject(By.res("open_nav"))
+
+        device.waitForIdle()
+
+        openNav.click()
+
+        device.waitForIdle()
+    }
+
+    private fun MacrobenchmarkScope.closeNavigation() {
+        val closeNav = device.findObject(By.res("close_nav"))
+
+        device.waitForIdle()
+
+        closeNav.click()
+
+        device.waitForIdle()
     }
 }
