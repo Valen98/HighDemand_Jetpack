@@ -34,13 +34,12 @@ class ExampleStartupBenchmark {
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
 
-    @OptIn(ExperimentalMetricApi::class)
-    @RequiresApi(Build.VERSION_CODES.Q)
+
     @Test
     fun startup() = benchmarkRule.measureRepeated(
         packageName = "com.example.highdemand_jetpack",
         metrics = listOf(StartupTimingMetric()),
-        iterations = 10,
+        iterations = 30,
         startupMode = StartupMode.COLD
     ) {
         pressHome()
@@ -51,7 +50,7 @@ class ExampleStartupBenchmark {
     fun scrollPostTest() = benchmarkRule.measureRepeated(
         packageName = "com.example.highdemand_jetpack",
         metrics = listOf(FrameTimingMetric()),
-        iterations = 10,
+        iterations = 30,
         startupMode = StartupMode.COLD
     ) {
         pressHome()
@@ -79,7 +78,7 @@ class ExampleStartupBenchmark {
     fun scrollRowTest() = benchmarkRule.measureRepeated(
         packageName = "com.example.highdemand_jetpack",
         metrics = listOf(FrameTimingMetric()),
-        iterations = 10,
+        iterations = 30,
         startupMode = StartupMode.COLD
     ) {
         pressHome()
@@ -133,5 +132,18 @@ class ExampleStartupBenchmark {
         closeNav.click()
 
         device.waitForIdle()
+    }
+
+    @Test
+    fun allTest() = benchmarkRule.measureRepeated(
+        packageName = "com.example.highdemand_jetpack",
+        metrics = listOf(FrameTimingMetric()),
+        iterations = 100,
+        startupMode = StartupMode.COLD
+    ) {
+        pressHome()
+        startActivityAndWait()
+        scrollPostList()
+        scrollRowList()
     }
 }
